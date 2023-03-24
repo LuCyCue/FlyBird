@@ -13,7 +13,6 @@ public class BirdController : MonoBehaviour
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        Debug.Log(animator);
     }
 
     // Update is called once per frame
@@ -26,13 +25,13 @@ public class BirdController : MonoBehaviour
         }
         animationTime = animationTime - Time.deltaTime;
         if (animationTime <= 0) {
-            animator.SetBool("isFly", false);
+            animator.SetFloat("isFly",0.0f);
         }
     }
 
     void clickAction() {
         rigidbody2d.velocity = new Vector2(0, clickUpY);
-        animator.SetBool("isFly",true);
+        animator.SetFloat("isFly",1.0f);
         animationTime = 0.5f;
     }
 
