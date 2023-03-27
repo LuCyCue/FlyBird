@@ -148,10 +148,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clickUpY: 1.5
-  flyAudio: {fileID: 0}
-  hitAudio: {fileID: 0}
-  scoreAudio: {fileID: 0}
-  dieAudio: {fileID: 0}
+  flyAudio: {fileID: 8300000, guid: 474fffcafe12e42af90c8957bd856210, type: 3}
+  hitAudio: {fileID: 8300000, guid: d90daff0ff6d94e539a3de2ca1c14ee2, type: 3}
+  scoreAudio: {fileID: 8300000, guid: b57595154eb6c4cc98a147bf3f0e62e8, type: 3}
+  dieAudio: {fileID: 8300000, guid: 3618c977f779c439e92a7bb5bd8146a0, type: 3}
 --- !u!95 &7764748219513980908
 Animator:
   serializedVersion: 5

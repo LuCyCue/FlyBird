@@ -6,19 +6,18 @@ using TMPro;
 
 public class Score : MonoBehaviour
 {
-    public TMP_Text textMesh; 
-    int score;
+    TMP_Text textMesh;
 
     void Start() {
         textMesh = GetComponent<TMP_Text>();
     }
     public void goal() {
-        score += 1;
-        textMesh.text = "Score: " + score.ToString();
+        GameData.shareInstance.score += 1;
+        textMesh.text = "Score: " + GameData.shareInstance.score.ToString();
     }
 
     public void reset() {
-        score = 0;
-        textMesh.text = "Score: " + score.ToString();
+        GameData.shareInstance.score = 0;
+        textMesh.text = "Score: " + GameData.shareInstance.score.ToString();
     }
 }

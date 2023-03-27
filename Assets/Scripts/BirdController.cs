@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BirdController : MonoBehaviour
 {
@@ -9,11 +10,12 @@ public class BirdController : MonoBehaviour
     public AudioClip hitAudio;
     public AudioClip scoreAudio;
     public AudioClip dieAudio;
+    public bool disableInteract;
     Rigidbody2D rigidbody2d;
     Animator animator;
     AudioSource audioSource;
     float animationTime;
-    bool isDie;
+    bool isLoseControl;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,9 +27,10 @@ public class BirdController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isDie && Input.GetMouseButtonDown(0)) {
-            //up
-            Debug.Log("click enter");
+        if (disableInteract) {
+            return;
+        }
+        if (!isLoseControl && Input.GetMouseButtonDown(0)) {
             clickAction();
         }
         animationTime = animationTime - Time.deltaTime;
@@ -44,13 +47,13 @@ public class BirdController : MonoBehaviour
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
-        Debug.Log(other.gameObject.tag);
-        if (other.gameObject.tag.CompareTo("pipe") == 0) {
+        if (other.gameObject.tag.CompareTo("pipe") == 0 ||
+            other.gameObject.tag.CompareTo("floor") == 0) {
             audioSource.PlayOneShot(hitAudio);
-        } else if (other.gameObject.tag.CompareTo("floor") == 0) {
-            isDie = true;
-            audioSource.PlayOneShot(dieAudio);
-        }   
+            isLoseControl = true;
+            rigidbody2d.gravityScale = 0.8f;
+            animator.SetFloat("isFly",2.1f);
+        }  
     }
 
     private void OnTriggerExit2D(Collider2D other) {
@@ -65,5 +68,15 @@ public class BirdController : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void OnBecameInvisible() {
+        if (disableInteract) return;
+        audioSource.PlayOneShot(dieAudio);
+        Invoke("jump2Waitting", 1);
+    }
+
+    private void jump2Waitting() {
+        SceneManager.LoadScene("Waiting");
     }
 }

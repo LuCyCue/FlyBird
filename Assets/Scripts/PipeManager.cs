@@ -10,6 +10,7 @@ public class PipeManager : MonoBehaviour
     public float minRandomY = -1.0f;
     public float maxRandomY = 1.0f;
     public float timer;
+    int lastScale;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +23,12 @@ public class PipeManager : MonoBehaviour
         timer = timer - Time.deltaTime;
         if (timer <= 0) {
             createPipe();
+            int scale = GameData.shareInstance.score / 20;
+            if (lastScale < scale && minCreateTime > 0.8f && maxCreateTime > 1.8f) {
+                minCreateTime = minCreateTime - (float)scale / 10.0f;
+                maxCreateTime = maxCreateTime - (float)scale / 10.0f;
+                lastScale = scale;
+            }
             timer = Random.Range(minCreateTime, maxCreateTime);
         }
     }
